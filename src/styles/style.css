@@ -23,6 +23,10 @@ a {
 	text-decoration: none;
 }
 
+li {
+	list-style:none;
+}
+
 footer {
 	background: white;
 	position: absolute;
