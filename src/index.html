@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>Nutri Food</title>
+  <title>Indeks Massa Tubuh</title>
   <link rel="stylesheet" type="text/css" href="build/build.css">
   <link rel="stylesheet" type="text/css" href="styles/style.css">
   <link rel="stylesheet" type="text/css" href="themes/themes.css">
@@ -12,8 +12,7 @@
 <article class="deck">
 
   <section>
-    <h1>NutriFood</h1>
-    <h2>Layanan Pemesanan Makanan Bergizi dan Sehat</h2>
+    <h1>Index Massa Tubuh (IMT)</h1>
   </section>
 
   <section>
@@ -26,37 +25,107 @@
   </section>
 
   <section>
-    <h2>Visi & Misi</h2>
+    <h2>Index Massa Tubuh</h2>
+    Indeks massa tubuh (IMT) adalah nilai yang diambil dari perhitungan
+    antara berat badan (BB) dan tinggi badan (TB) seseorang. IMT dipercayai dapat menjadi indikator atau mengambarkan kadar adipositas dalam tubuh seseorang. 
+    IMT tidak mengukur lemak tubuh secara langsung, tetapi penelitian menunjukkan bahwa IMT berkorelasi dengan pengukuran secara langsung lemak tubuh 
+    seperti underwater weighing dan dual energy x-ray absorbtiometry (Grummer-Strawn LM et al., 2002). 
+    IMT merupakan altenatif untuk tindakan pengukuran lemak tubuh karena murah serta metode skrining kategori berat badan yang mudah
+    dilakukan.
+  </section>
+    
+  <section>
+    <h2>Rumus Penghitungan IMT</h2>
+    IMT = Berat Badan (Kg)/(2 * Tinggi Badan(m))
+  </section>
+
+  <section>
+    <h2>Interpretasi dari hasil penghitungan</h2>
     <ul class="build build-items">
-      <li>Menjamin standar makanan yang bergizi dan lezat untuk kepuasan pelanggan</li>
-      <li>Menjamin standar pengemudi yang baik dan aman agar makanan sampai dengan selamat</li>
-      <li>Melayani peanggan dengan baik dan membuat pelanggan nyaman</li>
+      <li>Sangat Kurus &lt; 17.0</li>
+      <li>Kurus 17.0 - 18.5</li>
+      <li>Normal 18.5 - 24.9</li>
+      <li>Gemuk 25.0 - 29.9</li>
+      <li>Obesitas Level I 30.0 - 34.9</li>
+      <li>Obesitas Level II 35.0 - 39.9</li>
+      <li>Obesitas Level III ≥ 40</li>
     </ul>
   </section>
-
+    
   <section>
-    <h2>Masalah</h2>
-    <h3>Pada masa pandemic Covid-19 :</h3>
-    <ul class="build build-items">
-      <li>Membatasi kebebasan masyarakat untuk menjalani pola makan dengan baik</li>
-      <li>Membuat banyak bisnis makanan mengalami penurunan pelanggan</li>
-      <li>Banyak karyawan kehilangan pekerjaan</li>
-    </ul>  
-  </section>
-
-  <section>
-    <h2>Responsive Slides</h2>
-    <h3>Powered by <a href="https://github.com/bespokejs/bespoke-scale">bespoke-scale</a></h3>
-  </section>
-
-  <section>
-    <h2>Bullet List</h2>
-    <h3>Powered by <a href="https://github.com/bespokejs/bespoke-bullets">bespoke-bullets</a></h3>
-    <ul class="build build-items">
-      <li>Bullet 1</li>
-      <li>Bullet 2</li>
-      <li>Bullet 3</li>
-    </ul>
+    <div class="ancalc">
+      <form method="post" name="bmi">
+      <table cellpadding="2" cellspacing="0">
+            <tbody>
+      <tr>
+                <th class="top" colspan="2"><span>Kalkulator Indeks Massa Tubuh (BMI) </span></th>
+              </tr>
+      <tr>
+                <th colspan="2"><span>Masukkan Data </span></th>
+              </tr>
+      <tr>
+                <td class="left"><span>Kelamin</span></td>
+                <td><span><input checked="" name="sex" type="radio">
+                  Pria 
+                  <input name="sex" type="radio">
+                  Wanita </span></td>
+              </tr>
+      <tr>
+                <td><span>Berat</span></td>
+                <td><span><input maxlength="4" name="wt" size="3" type="text" value=""> 
+                          <select name="wu">
+                            <option>lbs 
+                            </option><option>kg </option></select> </span></td>
+              </tr>
+      <tr>
+                <td><span>Tinggi</span></td>
+                <td><span><input maxlength="3" name="ht" size="3" type="text" value=""> 
+                          <select name="hu">
+                            <option>inches 
+                            </option><option>cm 
+                            </option><option>meters </option></select></span></td>
+              </tr>
+      <tr>
+                <td colspan="2">
+      <span><input name="button" onclick="bmiCalc(this.form)" type="button" value="Hitung BMI"></span>
+      </td>
+              </tr>
+      <tr>
+                <th colspan="2"><span>Hasil </span></th>
+              </tr>
+      <tr>
+                <td><span>Body Surface Area </span></td>
+                <td><span><input class="output" maxlength="5" name="bsa" size="5" type="text" value="">
+      <span style="font-size: x-small;">m<sup>2</sup></span></span></td>
+              </tr>
+      <tr>
+                <td><span> Lean Body Weight</span></td>
+                <td><span> 
+                          <input class="output" maxlength="5" name="leanKg" size="5" type="text" value="">
+                          kg = 
+                          <input class="output" maxlength="5" name="leanLbs" size="5" type="text" value="">
+                          lbs </span></td>
+              </tr>
+      <tr>
+          <td><span> Ideal Body Weight</span></td>
+          <td><span> 
+                          <input class="output" maxlength="5" name="idealKg" size="5" type="text" value="">
+                          kg = 
+                          <input class="output" maxlength="5" name="idealLbs" size="5" type="text" value="">
+                          lbs </span></td>
+      </tr>
+      <tr>
+                <td><span> Body Mass Index (BMI)</span></td>
+                <td><span> 
+                          <input class="output" maxlength="5" name="bmi" size="5" type="text" value="">
+                          kg/m<sup>2</sup> =</span><span> 
+                          <input class="output" maxlength="12" name="interp" size="12" type="text" value="">
+                          </span></td>
+      </tr>
+      </tbody>
+      </table>
+      </form>
+      </div>
   </section>
 </article>
 </div>
@@ -64,5 +133,7 @@
 <script src="../scripts/bespoke.js"></script>
 <script src="../scripts/bespoke-bullets.js"></script>
 <script src="../scripts/demo.js"></script>
+<script src="../scripts/bmiCalc.js"></script>
+<script language="JavaScript" type="text/javascript">recalc_onclick('');  </script> 
 </body>
 </html>
