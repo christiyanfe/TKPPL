@@ -7,6 +7,118 @@
   <link rel="stylesheet" type="text/css" href="build/build.css">
   <link rel="stylesheet" type="text/css" href="styles/style.css">
   <link rel="stylesheet" type="text/css" href="themes/themes.css">
+  <script>
+    function bmiCalc(form) {
+      var weight = Number(form.wt.value);
+      var height = Number(form.ht.value);
+
+      if (!checkNum(weight,"WEIGHT")) {
+          form.wt.select();
+          form.wt.focus();
+          return false
+      }
+
+      if (!checkNum(height,"HEIGHT")) {
+          form.ht.select();
+          form.ht.focus();
+          return false
+      }
+
+          if (form.wu.selectedIndex == 0) {
+                                          //  What units for weight?
+                                          //  0 = lbs
+                                          //  1 = kg
+                  weight = weight * 0.45359237;	//  Convert wt (lbs to kg)
+          }
+
+          if (form.sex[1].checked) {      //  Is the patient female?
+                                          //  0 = male
+                                          //  1 = female
+                  leanFactor = 1.07 
+          leanConvert = 148;
+          idealConvert = 45.5;	//  conversion factors for women
+          } else {
+                  leanFactor = 1.1 
+          leanConvert = 128;
+          idealConvert = 50;	//  conversion factors for men
+      }
+
+      if (form.hu.selectedIndex == 0) {  
+                  //  if height units are "inches"
+          heightInches = height;
+          heightMeters = height * 2.54 / 100;
+      }
+
+      if (form.hu.selectedIndex == 1) {  
+                  //  if height units are "cm"
+          heightInches = height / 2.54;
+          heightMeters = height / 100;
+      }
+
+      if (form.hu.selectedIndex == 2) {  
+                  //  if height units are "meters"
+          heightInches = height * 100 / 2.54;
+          heightMeters = height;
+      }
+
+
+      var bsa = 0.20247 * Math.pow(heightMeters,0.725) *
+          Math.pow(weight,0.425);
+      var leanKg = (leanFactor * weight) - (leanConvert * (Math.pow(weight,2) / 
+          Math.pow((100 * heightMeters),2)));
+      var leanLbs = leanKg * 2.2046226;
+      var idealKg = idealConvert + 2.3 * (heightInches - 60);
+      var idealLbs = idealKg * 2.2046226;
+      var bmi = weight / Math.pow(heightMeters,2);
+
+      bsa = rounding(bsa,2);
+      leanKg = Math.round(leanKg);
+      leanLbs = Math.round(leanLbs);
+      idealKg = Math.round(idealKg);
+      idealLbs = Math.round(idealLbs);
+      bmi = rounding(bmi,1);
+
+      if (bmi < 18.5) {
+          var interp = "Underweight"
+      } else {
+          if (bmi < 25.0) {
+              var interp = "Normal"
+          } else {
+              if (bmi < 30.0) {
+                  var interp = "Overweight"
+              } else {
+                  var interp = "Obese"
+              }
+          }
+      }
+
+      form.bsa.value = bsa;
+      form.leanKg.value = leanKg;
+      form.leanLbs.value = leanLbs;
+      form.idealKg.value = idealKg;
+      form.idealLbs.value = idealLbs;
+      form.bmi.value = bmi;
+      form.interp.value = interp;
+
+      return true
+      }
+
+
+      function checkNum(val,text) {
+          if ((val == null) || (isNaN(val)) || (val == "") || (val < 0)) {
+          alert("Please enter a value for " + text + ".");
+                  return false
+          }
+          return true;
+      }
+
+
+      function rounding(number,decimal) {
+      multiplier = Math.pow(10,decimal);
+      number = Math.round(number * multiplier) / multiplier;
+          return number
+      }
+  </script>
 </head>
 <body class="coverflow">
 <article class="deck">
@@ -52,80 +164,99 @@
     </ul>
   </section>
     
-  <section>
-    <div class="ancalc">
-      <form method="post" name="bmi">
+  <section class="ancalc">
+    <form method="post" name="bmi">
       <table cellpadding="2" cellspacing="0">
-            <tbody>
-      <tr>
-                <th class="top" colspan="2"><span>Kalkulator Indeks Massa Tubuh (BMI) </span></th>
-              </tr>
-      <tr>
-                <th colspan="2"><span>Masukkan Data </span></th>
-              </tr>
-      <tr>
-                <td class="left"><span>Kelamin</span></td>
-                <td><span><input checked="" name="sex" type="radio">
-                  Pria 
-                  <input name="sex" type="radio">
-                  Wanita </span></td>
-              </tr>
-      <tr>
-                <td><span>Berat</span></td>
-                <td><span><input maxlength="4" name="wt" size="3" type="text" value=""> 
-                          <select name="wu">
-                            <option>lbs 
-                            </option><option>kg </option></select> </span></td>
-              </tr>
-      <tr>
-                <td><span>Tinggi</span></td>
-                <td><span><input maxlength="3" name="ht" size="3" type="text" value=""> 
-                          <select name="hu">
-                            <option>inches 
-                            </option><option>cm 
-                            </option><option>meters </option></select></span></td>
-              </tr>
-      <tr>
-                <td colspan="2">
-      <span><input name="button" onclick="bmiCalc(this.form)" type="button" value="Hitung BMI"></span>
-      </td>
-              </tr>
-      <tr>
-                <th colspan="2"><span>Hasil </span></th>
-              </tr>
-      <tr>
-                <td><span>Body Surface Area </span></td>
-                <td><span><input class="output" maxlength="5" name="bsa" size="5" type="text" value="">
-      <span style="font-size: x-small;">m<sup>2</sup></span></span></td>
-              </tr>
-      <tr>
-                <td><span> Lean Body Weight</span></td>
-                <td><span> 
-                          <input class="output" maxlength="5" name="leanKg" size="5" type="text" value="">
-                          kg = 
-                          <input class="output" maxlength="5" name="leanLbs" size="5" type="text" value="">
-                          lbs </span></td>
-              </tr>
-      <tr>
-          <td><span> Ideal Body Weight</span></td>
-          <td><span> 
-                          <input class="output" maxlength="5" name="idealKg" size="5" type="text" value="">
-                          kg = 
-                          <input class="output" maxlength="5" name="idealLbs" size="5" type="text" value="">
-                          lbs </span></td>
-      </tr>
-      <tr>
-                <td><span> Body Mass Index (BMI)</span></td>
-                <td><span> 
-                          <input class="output" maxlength="5" name="bmi" size="5" type="text" value="">
-                          kg/m<sup>2</sup> =</span><span> 
-                          <input class="output" maxlength="12" name="interp" size="12" type="text" value="">
-                          </span></td>
-      </tr>
-      </tbody>
+        <tbody>
+          <tr>
+            <th class="top" colspan="2"><span>Kalkulator Indeks Massa Tubuh (BMI) </span></th>
+          </tr>
+          <tr>
+            <th colspan="2"><span>Masukkan Data </span></th>
+          </tr>
+          <tr>
+            <td class="left"><span>Kelamin</span></td>
+            <td><span><input checked="" name="sex" type="radio">Pria<input name="sex" type="radio">Wanita </span></td>
+          </tr>
+          <tr>
+            <td><span>Berat</span></td>
+            <td>
+              <span>
+                <input maxlength="4" name="wt" size="3" type="text" value="">
+                <select name="wu">
+                  <option>lbs </option>
+                  <option>kg </option>
+                </select>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Tinggi</span></td>
+            <td>
+              <span>
+                <input maxlength="3" name="ht" size="3" type="text" value=""> 
+                <select name="hu">
+                  <option>inches 
+                  </option><option>cm 
+                  </option><option>meters </option></select></span></td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <span>
+                <input name="button" onclick="bmiCalc(this.form)" type="button" value="Hitung BMI">
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="2"><span>Hasil </span></th>
+          </tr>
+          <tr>
+            <td><span>Body Surface Area </span></td>
+            <td>
+              <span>
+                <input class="output" maxlength="5" name="bsa" size="5" type="text" value="">
+                  <span style="font-size: x-small;">m<sup>2</sup></span>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span> Lean Body Weight</span>
+            </td>
+            <td>
+              <span> 
+                <input class="output" maxlength="5" name="leanKg" size="5" type="text" value="">kg = 
+                <input class="output" maxlength="5" name="leanLbs" size="5" type="text" value="">lbs 
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span> Ideal Body Weight</span>
+            </td>
+            <td>
+              <span> 
+                <input class="output" maxlength="5" name="idealKg" size="5" type="text" value="">kg = 
+                <input class="output" maxlength="5" name="idealLbs" size="5" type="text" value="">lbs 
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span> Body Mass Index (BMI)</span>
+            </td>
+            <td>
+              <span> 
+                <input class="output" maxlength="5" name="bmi" size="5" type="text" value="">kg/m<sup>2</sup> =
+              </span>
+              <span> 
+                <input class="output" maxlength="12" name="interp" size="12" type="text" value="">
+              </span>
+            </td>
+          </tr>
+        </tbody>
       </table>
-      </form>
-      </div>
+    </form>
   </section>
 </article>
 </div>
@@ -133,7 +264,6 @@
 <script src="../scripts/bespoke.js"></script>
 <script src="../scripts/bespoke-bullets.js"></script>
 <script src="../scripts/demo.js"></script>
-<script src="../scripts/bmiCalc.js"></script>
 <script language="JavaScript" type="text/javascript">recalc_onclick('');  </script> 
 </body>
 </html>
