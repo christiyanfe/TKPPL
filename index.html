@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Indeks Massa Tubuh</title>
+  <link rel="stylesheet" type="text/css" href="build/build.css">
+  <link rel="stylesheet" type="text/css" href="styles/style.css">
+  <link rel="stylesheet" type="text/css" href="themes/themes.css">
+  <script>
+    function bmiCalc(form) {
+      var weight = Number(form.wt.value);
+      var height = Number(form.ht.value);
+
+      if (!checkNum(weight,"WEIGHT")) {
+          form.wt.select();
+          form.wt.focus();
+          return false
+      }
+
+      if (!checkNum(height,"HEIGHT")) {
+          form.ht.select();
+          form.ht.focus();
+          return false
+      }
+
+          if (form.wu.selectedIndex == 0) {
+                                          //  What units for weight?
+                                          //  0 = lbs
+                                          //  1 = kg
+                  weight = weight * 0.45359237;	//  Convert wt (lbs to kg)
+          }
+
+          if (form.sex[1].checked) {      //  Is the patient female?
+                                          //  0 = male
+                                          //  1 = female
+                  leanFactor = 1.07 
+          leanConvert = 148;
+          idealConvert = 45.5;	//  conversion factors for women
+          } else {
+                  leanFactor = 1.1 
+          leanConvert = 128;
+          idealConvert = 50;	//  conversion factors for men
+      }
+
+      if (form.hu.selectedIndex == 0) {  
+                  //  if height units are "inches"
+          heightInches = height;
+          heightMeters = height * 2.54 / 100;
+      }
+
+      if (form.hu.selectedIndex == 1) {  
+                  //  if height units are "cm"
+          heightInches = height / 2.54;
+          heightMeters = height / 100;
+      }
+
+      if (form.hu.selectedIndex == 2) {  
+                  //  if height units are "meters"
+          heightInches = height * 100 / 2.54;
+          heightMeters = height;
+      }
+
+
+      var bsa = 0.20247 * Math.pow(heightMeters,0.725) *
+          Math.pow(weight,0.425);
+      var leanKg = (leanFactor * weight) - (leanConvert * (Math.pow(weight,2) / 
+          Math.pow((100 * heightMeters),2)));
+      var leanLbs = leanKg * 2.2046226;
+      var idealKg = idealConvert + 2.3 * (heightInches - 60);
+      var idealLbs = idealKg * 2.2046226;
+      var bmi = weight / Math.pow(heightMeters,2);
+
+      bsa = rounding(bsa,2);
+      leanKg = Math.round(leanKg);
+      leanLbs = Math.round(leanLbs);
+      idealKg = Math.round(idealKg);
+      idealLbs = Math.round(idealLbs);
+      bmi = rounding(bmi,1);
+
+      if (bmi < 18.5) {
+          var interp = "Underweight"
+      } else {
+          if (bmi < 25.0) {
+              var interp = "Normal"
+          } else {
+              if (bmi < 30.0) {
+                  var interp = "Overweight"
+              } else {
+                  var interp = "Obese"
+              }
+          }
+      }
+
+      form.bsa.value = bsa;
+      form.leanKg.value = leanKg;
+      form.leanLbs.value = leanLbs;
+      form.idealKg.value = idealKg;
+      form.idealLbs.value = idealLbs;
+      form.bmi.value = bmi;
+      form.interp.value = interp;
+
+      return true
+      }
+
+
+      function checkNum(val,text) {
+          if ((val == null) || (isNaN(val)) || (val == "") || (val < 0)) {
+          alert("Please enter a value for " + text + ".");
+                  return false
+          }
+          return true;
+      }
+
+
+      function rounding(number,decimal) {
+      multiplier = Math.pow(10,decimal);
+      number = Math.round(number * multiplier) / multiplier;
+          return number
+      }
+  </script>
+</head>
+<body class="coverflow">
+<article class="deck">
+
+  <section>
+    <h1>Index Massa Tubuh (IMT)</h1>
+  </section>
+
+  <section>
+    <h3>Our Team :</h3>
+    <ul class="build build-items">
+      <li>Ketua : Christian Fernando  (171110312)</li>
+      <li>Anggota : Danny Christiara  (171110673)</li>
+      <li>Asa Togarma Gultom  (171113084)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Pengertian Berat Badan</h2>
+    Menurut Cipto Surono dalam Mabella (2000), mengatakan bahwa berat badan adalah
+    Ukuran tubuh dalam sisi beratnya yang sedang ditimbang dalam keadaan berpakaian minimal tanpa perlengkapan apapun.
+    Dengan mengetahui berat badan seseorang maka kita dapat memperkirakan tingkat kesehatan atau gizi seseorang.
+  </section>
+
+  <section>
+    <h2>Pengertian Berat Badan Ideal dan Sehat</h2>
+    Berat badan ideal dan sehat bisa didefinisikan sebagai kondisi berat badan yang seimbang dengan tinggi badan anda.
+    Sehingga anda akan memiliki penampilan fisik yang tampak ideal dan sehat, tidak terlalu kurus atau gemuk 
+    Serta memiliki energi yang cukup untuk menjalani kegiatan penting harian anda.
+  </section>
+
+  <section>
+    <h2>Index Massa Tubuh</h2>
+    Indeks massa tubuh (IMT) adalah nilai yang diambil dari perhitungan
+    antara berat badan (BB) dan tinggi badan (TB) seseorang. IMT dipercayai dapat menjadi indikator atau mengambarkan kadar adipositas dalam tubuh seseorang. 
+    IMT tidak mengukur lemak tubuh secara langsung, tetapi penelitian menunjukkan bahwa IMT berkorelasi dengan pengukuran secara langsung lemak tubuh 
+    seperti underwater weighing dan dual energy x-ray absorbtiometry (Grummer-Strawn LM et al., 2002). 
+    IMT merupakan altenatif untuk tindakan pengukuran lemak tubuh karena murah serta metode skrining kategori berat badan yang mudah
+    dilakukan.
+  </section>
+
+  <section>
+    <h2>Sejarah BMI</h2>
+    Adolphe Quetelet, seorang astronom Belgia, matematikawan, ahli statistik, dan sosiolog, merancang dasar BMI antara tahun 1830 dan 1850 saat ia mengembangkan apa yang ia sebut "Social Physics". &nbsp;
+    Istilah modern "indeks massa tubuh" (BMI) untuk rasio berat badan manusia dengan tinggi kuadrat diciptakan dalam sebuah makalah yang diterbitkan dalam Journal of Chronic Diseases edisi Juli 1972 oleh Ancel Keys dan lain-lain. &nbsp;
+    Dalam makalah ini, Keys berpendapat bahwa apa yang dia sebut BMI adalah "... jika tidak sepenuhnya memuaskan, setidaknya sama baiknya dengan indeks berat badan relatif lainnya sebagai indikator obesitas relatif".
+  </section>
+  
+  <section>
+    <h2>Kegunaan BMI</h2>
+    <ul class="build build-items">
+      <li>BMI digunakan untuk menentukan status berat badan seseorang apakah seseorang memiliki badan yang terlalu kurus, ideal, atau terlalu gemuk</li>
+      <li>BMI membantu menilai status berat badan seseorang terhadap resiko masalah kesehatan akibat kekurangan atau kelebihan berat badan</li>
+      <li>Dokter menggunakan BMI untuk menilai status berat badan seseorang berkaitan dengan resiko masalah kesehatan tertentu</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Kelemahan Penggunaan Perhitungan BMI</h2>
+    Ada beberapa kelemahan dalam penggunaan BMI untuk menginterpretasi status berat badan orang dewasa, antara lain :&ensp;
+    <ul class="build build-items">
+      <li>BMI tidak mempertimbangkan faktor umur sehingga kemungkinan underestimasi untuk orang lanjut usia</li>
+      <li>BMI tidak mempertimbangkan faktor massa otot, sehingga mungkin overestimasi bagi para atlit olahraga yang berotot</li>
+      <li>BMI mungkin overestimasi pada wanita hamil</li>
+      <li>BMI tidak mempertimbangkan faktor bentuk rangka tubuh, sehingga rentang nilainya berbeda untuk setiap populasi</li>
+      <li>BMI tidak mempertimbangkan perbedaan jenis kelamin, sehingga mungkin overestimasi terhadap pria</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Rumus Penghitungan IMT</h2>
+    IMT = Berat Badan (Kg)/(2 * Tinggi Badan(m))
+  </section>
+
+  <section>
+    <h2>Interpretasi dari hasil penghitungan</h2>
+    <ul class="build build-items">
+      <li>Sangat Kurus &lt; 17.0</li>
+      <li>Kurus 17.0 - 18.5</li>
+      <li>Normal 18.5 - 24.9</li>
+      <li>Gemuk 25.0 - 29.9</li>
+      <li>Obesitas Level I 30.0 - 34.9</li>
+      <li>Obesitas Level II 35.0 - 39.9</li>
+      <li>Obesitas Level III ≥ 40</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Pengertian Obesitas</h2>
+    Obesitas adalah Kondisi akibat penumpukan lemak dalam tubuh yang sangat tinggi.
+    Obesitas terjadi karena asupan kalori yang lebih banyak dibanding aktivitas membakar kalori, sehingga kalori yang berlebih menumpuk dalam bentuk lemak.
+    Apabila kondisi tersebut terjadi dalam waktu yang lama, maka akan menambah berat badan hingga mengalami obesitas.
+  </section>
+  
+  <section>
+    <h2>Tipe-tipe Obesitas</h2>
+    <ul class="build build-items">
+      <li>1. Tipe Android (Buah Apel)</li>&nbsp;
+      <p>Pada tipe ini penumpukan lemak terjadi pada bagian tubuh atas seperti dada, pundak, leher dan muka. 
+      Dikatakan tipe Android karena pada obesitas ini tubuh akan menyerupai bentuk dari sebuah apel. 
+      Kondisi ini biasanya terjadi pada pria atau wanita yang sudah menopause.
+      </p>&nbsp;
+      <li>2. Tipe Ginoid (Buah Pir)</li>&nbsp;
+      <p>Pada obesitas ini umum diderita oleh wanita. Penumpukan lemak terjadi pada bagian bawah sekitar perut, pinggul, paha dan pantat.
+        Karena lemak yang menumpuk adalah lemak tak jenuh, tipe obesitas ini relatif lebih aman dibanding tipe sebelumnya.
+        Namun pada tipe ini lemak sulit dibakar, sehingga untuk menurunkan berat badan akan lebih sulit.
+      </p>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Cara mencegah Obesitas</h2>
+    <ul class="build build-items">
+        <li>Berhentilah makan sebelum anda merasa kenyang</li>
+        <li>Hindari mengkonsumsi makanan ringan, tapi gantilah makanan ringan tersebut dengan buah dan sayur agar tidak menghilangkan hobi tersebut.</li>
+        <li>Hindari obesitas dengan berolahraga. berolahraga juga akan menjaga sistem metabolisme tubuh anda.</li>
+        <li>Ada baiknya anda mengurangi makan makanan yang manis</li>
+        <li>Tambahkan asupan protein harian anda</li>
+        <li>Cukup tidur dan Minum air putih</li>
+        <li>Jalankan diet rendah karbohidrat</li>
+        <li>Hindari makanan olahan, konsumsi probiotik, dan sikat gigi setelah makan.</li>
+    </ul>
+  </section>
+    
+  <section class="ancalc">
+    <form method="post" name="bmi">
+      <table cellpadding="2" cellspacing="0">
+        <tbody>
+          <tr>
+            <th class="top" colspan="2"><span>Kalkulator Indeks Massa Tubuh (BMI) </span></th>
+          </tr>
+          <tr>
+            <th colspan="2"><span>Masukkan Data </span></th>
+          </tr>
+          <tr>
+            <td class="left"><span>Kelamin</span></td>
+            <td><span><input checked="" name="sex" type="radio">Pria<input name="sex" type="radio">Wanita </span></td>
+          </tr>
+          <tr>
+            <td><span>Berat</span></td>
+            <td>
+              <span>
+                <input maxlength="4" name="wt" size="3" type="text" value="">
+                <select name="wu">
+                  <option>lbs </option>
+                  <option>kg </option>
+                </select>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Tinggi</span></td>
+            <td>
+              <span>
+                <input maxlength="3" name="ht" size="3" type="text" value=""> 
+                <select name="hu">
+                  <option>inches 
+                  </option><option>cm 
+                  </option><option>meters </option></select></span></td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <span>
+                <input name="button" onclick="bmiCalc(this.form)" type="button" value="Hitung BMI">
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="2"><span>Hasil </span></th>
+          </tr>
+          <tr>
+            <td><span>Body Surface Area </span></td>
+            <td>
+              <span>
+                <input class="output" maxlength="5" name="bsa" size="5" type="text" value="">
+                  <span style="font-size: x-small;">m<sup>2</sup></span>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span> Lean Body Weight</span>
+            </td>
+            <td>
+              <span> 
+                <input class="output" maxlength="5" name="leanKg" size="5" type="text" value="">kg = 
+                <input class="output" maxlength="5" name="leanLbs" size="5" type="text" value="">lbs 
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span> Ideal Body Weight</span>
+            </td>
+            <td>
+              <span> 
+                <input class="output" maxlength="5" name="idealKg" size="5" type="text" value="">kg = 
+                <input class="output" maxlength="5" name="idealLbs" size="5" type="text" value="">lbs 
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span> Body Mass Index (BMI)</span>
+            </td>
+            <td>
+              <span> 
+                <input class="output" maxlength="5" name="bmi" size="5" type="text" value="">kg/m<sup>2</sup> =
+              </span>
+              <span> 
+                <input class="output" maxlength="12" name="interp" size="12" type="text" value="">
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </section>
+</article>
+</div>
+<script src="build/build.js"></script>
+<script src="../scripts/bespoke.js"></script>
+<script src="../scripts/bespoke-bullets.js"></script>
+<script src="../scripts/demo.js"></script>
+<script language="JavaScript" type="text/javascript">recalc_onclick('');  </script> 
+</body>
+</html>
