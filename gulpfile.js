@@ -114,3 +114,39 @@ gulp.task('build', ['js', 'html', 'css', 'images', 'fonts']);
 gulp.task('serve', ['connect', 'watch']);
 
 gulp.task('default', ['build']);
+
+var gulp = require('gulp');
+var gulpConcat = require('gulp-concat');
+var gulpUglify = require('gulp-uglify');
+
+gulp.task('minify-js', function() {
+  gulp
+    .src([
+      './src/index1.js',
+      './src/index2.js'
+    ])
+    .pipe(gulpConcat('bundle.js'))
+    .pipe(gulpUglify())
+    .pipe(gulp.dest('dist'));
+});
+
+var gulp = require('gulp');
+var gulpHtmlmin = require('gulp-htmlmin');
+
+gulp.task('minify-html', function() {
+  gulp.src('src/*.html')
+    .pipe(gulpHtmlmin({
+      collapseWhitespace: true
+    }))
+    .pipe(gulp.dest('dist'))
+});
+
+var gulp = require('gulp');
+var gulpConnect = require('gulp-connect');
+
+gulp.task('server', function() {
+  gulpConnect.server({
+    root: 'src',
+    livereload: true
+  });
+});

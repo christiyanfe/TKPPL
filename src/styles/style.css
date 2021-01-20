@@ -65,6 +65,14 @@ footer a {
 	margin-right: 4px;
 }
 
+td {
+	padding-bottom: 5px;
+}
+
+td span {
+	padding-left: 5px;
+}
+
 .arrow {
 	-webkit-transition: background .1s ease;
 	-moz-transition: background .1s ease;
@@ -117,7 +125,7 @@ h1 {
 	-ms-transform: scale(0.5);
 	-o-transform: scale(0.5);
 	transform: scale(0.5);
-
+	font-family: Helvetica, Arial, sans-serif;
 	font-weight: normal;
 	text-align: center;
 	text-shadow: 0 0 1px white, 0 0 1px white, 0 0 1px white;
@@ -144,6 +152,22 @@ h2 {
 	right: 0;
 	top: 50%;
 	z-index: 30;
+	margin-top: 14px;
+	text-align: center;
+	font-family: Gill Sans, Segoe UI Light, Helvetica, Arial, sans-serif;
+	font-size: 17px;
+	font-weight: 200;
+	color: white;
+	opacity: 0.9;
+}
+
+h3 {
+	-webkit-transition: opacity 2s ease;
+	-moz-transition: opacity 2s ease;
+	-ms-transition: opacity 2s ease;
+	-o-transition: opacity 2s ease;
+	transition: opacity 2s ease;
+	position: absolute top;
 	margin-top: 14px;
 	text-align: center;
 	font-family: Gill Sans, Segoe UI Light, Helvetica, Arial, sans-serif;
